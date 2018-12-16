@@ -1,0 +1,6 @@
+platforms/
+plugins/
+node_modules
+bin
+gen
+.DS_Store

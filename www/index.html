@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+
+   <!--commenting this out
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" /> 
+    comment this out-->
+
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Hello World</title>
+</head>
+
+<body onload="loadCurrency()">
+    
+        <h1>Mobile Development</h1>
+        <div id="deviceready" class="blink">
+            <p class="event listening">Connecting to Device</p>
+            <h3 class="event received">Welcome To Charity's Application</h3>
+
+            <br>
+
+             <!--Create a button on the front end to call the getLocation function.-->
+             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+             <div id="text"> Click Here to View Weather And Your Location</div>
+             <!--<input class="city" type="text"></input> -->
+             <button class="submit">Weather Forecast</button>
+             <div>Weather in : <span class="city-name"></span></div> <!-- Will show the location, we use a span to have a dynamic blank space. -->
+             <div class="weather"></div>	<!-- Will show the weather -->
+             <div class="temp"></div>	<!-- Will show the temperature -->
+             <div class="country"></div> <!-- Will show the country -->
+         
+             <script>
+                     $(".submit").click(function(){
+                             var city = $(".city").val()
+                             //Make the API Call
+                             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Dublin&APPID=53bd47d043acad149d337cbda2c996ea",
+                         {
+                             zip:11355,
+                             units:"imperial"
+                         },
+                         function(response){  //'response' is actually a variable, we could name it what ever we want. It just stores what the api sends
+                             console.log(response)
+                             $(".country").html(response.sys.country)
+                             $(".temp").html(response.main.temp);
+                             $(".city-name").html(response.name);
+                               $(".weather").html(response.weather[0].description)
+                         });
+                     })
+                     
+                 </script> 
+             
+             <br> <br>
+
+            <!--Add a place holder for your map in the HTML file of your app.-->
+            <div id="map"></div>
+            <br><br>
+
+
+            <!--adding a button for vibration-->
+            <button onclick="shake()">vibrate phone</button>
+
+            <!--adding-->
+            <div id="accelerometer">waiting for accelerometer</div>
+            <br><br>
+
+            
+
+            <!--creating a place holder to display the picture-->
+            <div id="text">Click here to take a picture</div><br>
+            <button id="buttonPic" onclick="pics()">Picture</button>
+            <img id="myImage" height="50%" width="50%"> 
+            <br><br>
+
+        <!--################(2) creating a place holder for currency conversion #######-->
+        <!-- Converting amount to Euro -->
+        <!-- User input amount -->      
+        <br>
+        <div>Convert your Currency</div><br>
+        <div >Enter Amount in USD </div> 
+        <br>
+        
+        <input type="text" id="amount">   
+        <br>
+        <br>
+
+        <div class=""> TO:
+                <br>
+            <br>
+            <select id="from">
+                
+                <option value="EUR">EUR</option> <!-- amount in Euro -->
+            </select> </div>
+            <br>
+
+            <!-- converting currency -->
+            <button onclick="http.onreadystatechange()">Enter</button> 
+            <br><br>
+
+            <div id="row">Amount Result:  
+            </div>
+            
+            <div id="result"></div>
+            <br><br>
+            
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <div id="text">Click Here To Save This Information</div>
+    <button onclick="requestFileSystem">Save</button>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+    
+        app.initialize();
+    </script>
+
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD4PkFeo-TnnyLH05dLC_URzfLn_QbrSk&callback=initMap">
+    </script>
+
+    
+
+
+    .
+</body>
+
+</html>
